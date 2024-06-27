@@ -49,6 +49,7 @@ namespace AjaxProject.Controllers
             return Json(jsonValues);
         }
 
+
         public IActionResult UpdateProduct(Product product)
         {
             var value = _context.Products.Find(product.ProductId);

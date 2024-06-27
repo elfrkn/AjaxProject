@@ -33,8 +33,27 @@
     <input type="text" id="txtstock" placeholder="Ürün Stok Sayısını Giriniz" class="form-control" />
     <br />
 </div>
-
-
+<br />
+<div>
+    <div class="alert alert-info">Ürün Silme İşlemi</div>
+    <input type="text" id="txtdeletedid" class="form-control" placeholder="Silinecek Id değerini giriniz" />
+</div>
+<br />
+<div class="alert alert-info">ID Değerine Göre Ürün Bilgisi</div>
+<div id="productlistbyid">
+    <input type="text" id="getproductid" placeholder="Bilgileri Getirilecek Ürün Id Değeri" class="form-control" />
+</div>
+<br />
+<div>
+    <input type="text" id="txteditid" placeholder="Güncellenecek Ürün Id" class="form-control" />
+    <br />
+    <input type="text" id="txteditname" placeholder="Güncellenecek Ürün Adı" class="form-control" />
+    <br />
+    <input type="text" id="txteditprice" placeholder="Güncellenecek Ürün Fiyatı" class="form-control" />
+    <br />
+    <input type="text" id="txteditstock" placeholder="Güncellenecek Ürün Stok Değeri" class="form-control" />
+    <br />
+</div>
 
 <script>
     $("#btnlist").click(function () {
@@ -87,6 +106,53 @@
             }
         });
 
+    });
+
+    $("#btndelete").click(x => {
+        let id = $("#txtdeletedid").val();
+        $.ajax({
+            url: "/Default/DeleteProduct/" + id,
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (funk3) {
+                alert("Ürün Başarıyla Silindi");
+            }
+        });
+    });
+
+    $("#btnget").click(x => {
+        let id = $("#getproductid").val();
+
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "Get",
+            url: "/Default/GetProduct/" + id,
+            success: function (funk4) {
+                let result = jQuery.parseJSON(funk4);
+                console.log(result);
+            }
+        });
+    });
+
+
+    $("#btnupdate").click(function () {
+        let values = {
+            ProductId: $("#txteditid").val(),
+            Price: $("#txteditprice").val(),
+            Name: $("#txteditname").val(),
+            Stock: $("#txteditstock").val()
+        };
+
+        $.ajax({
+            type: "post",
+            url: "/Default/UpdateProduct/",
+            data: values,
+            success: function (funk5) {
+                alert("Güncelleme Başarıyla Yapıldı");
+            }
+        });
     });
 
 </script>
